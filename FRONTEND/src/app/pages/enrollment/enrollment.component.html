@@ -1,0 +1,25 @@
+<div class="container mt-4">
+	<h2>Matricular Estudiante</h2>
+
+  @if (isAdmin()) {
+    <div class="form-group">
+      <label for="userSelect">Selecciona un usuario</label>
+      <select id="userSelect" class="form-control" [(ngModel)]="selectedUserId">
+      <option *ngFor="let user of users" [value]="user.id">{{ user.name }}</option>
+      </select>
+    </div>
+
+    <div class="form-group mt-3">
+      <label for="courseSelect">Selecciona un curso</label>
+      <select id="courseSelect" class="form-control" [(ngModel)]="selectedCourseId">
+      <option *ngFor="let course of courses" [value]="course.id">{{ course.name }}</option>
+      </select>
+    </div>
+
+    <button class="btn btn-primary mt-3" (click)="enroll()">Enroll</button>
+
+    <div *ngIf="message" class="alert alert-info mt-3">{{ message }}</div>
+  } @else {
+    <div class="alert alert-danger">No tienes permisos para matricular estudiantes</div>
+  }
+  </div>

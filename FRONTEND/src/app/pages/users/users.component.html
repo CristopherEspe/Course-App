@@ -1,0 +1,61 @@
+<section class="container my-4">
+    <!-- Table of users -->
+    <table class="table table-bordered table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (row of userRows; track row) {
+                <tr>
+                    <td>{{ row.user.id }}</td>
+                    <td>{{ row.user.name }}</td>
+                    <td>{{ row.user.email }}</td>
+                    <td>{{ row.user.password }}</td>
+                    <td>
+                        <div class="btn-group">
+                            <button class="btn btn-primary" (click)="openFormModal(row.user)">Editar</button>
+                            <button class="btn btn-danger"(click)="deleteUser(row.user.id)" >Eliminar</button>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</section>
+
+@if (isAdmin()) {
+  <div [ngClass]="{ 'hidden': !showFormModal }"  class="container my-4">
+      <!-- Modal form -->
+      <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="formModalLabel">Formulario de Usuario</h5>
+              </div>
+              <div class="modal-body">
+                  <form>
+                      <div class="mb-3">
+                          <label for="name" class="form-label">Nombre</label>
+                          <input type="text" class="form-control" [(ngModel)]="userForm.name" name="name" placeholder="Nombre" required>
+                      </div>
+                      <div class="mb-3">
+                          <label for="email" class="form-label">Email</label>
+                          <input type="email" class="form-control" [(ngModel)]="userForm.email" name="email" placeholder="Email" required>
+                      </div>
+                      <div class="mb-3">
+                          <label for="password" class="form-label">Password</label>
+                          <input type="password" class="form-control" [(ngModel)]="userForm.password" name="password" placeholder="Password" required>
+                      </div>
+                      <button type="submit" class="btn btn-success" (click)="createUser()">Guardar</button>
+                  </form>
+              </div>
+          </div>
+      </div>
+      <div *ngIf="message" class="alert alert-info mt-3">{{ message }}</div>
+  </div>
+}
